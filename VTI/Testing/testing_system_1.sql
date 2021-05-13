@@ -1,11 +1,11 @@
-drop database if exists testing_system_2;
-create database testing_system_2;
-use testing_system_2;
+drop database if exists testing_system_1;
+create database testing_system_1;
+use testing_system_1;
 
 -- tạo bảng phòng ban--
 CREATE TABLE Department (
-	DepartmentID TINYINT UNSIGNED PRIMARY KEY,
-    DepartmentName VARCHAR(40) CHECK(LENGTH(DepartmentName) >= 7)
+	DepartmentID 	TINYINT UNSIGNED PRIMARY KEY,
+    DepartmentName 	VARCHAR(40) CHECK(LENGTH(DepartmentName) >= 3)
 );
 -- tạo bảng chức vụ
 create table Position1 (
@@ -17,11 +17,11 @@ create table Position1 (
 create table Account1 (
 	AccountID 		TINYINT UNSIGNED 	PRIMARY KEY,
     Email 			VARCHAR(50)			UNIQUE KEY,
-    Username  		VARCHAR(30) 		UNIQUE KEY 	CHECK(LENGTH(Username) >= 6),
+    Username  		VARCHAR(30) 		UNIQUE KEY 	CHECK(LENGTH(Username) >= 5),
     FullName 		VARCHAR(30) 					CHECK(LENGTH(Fullname) >= 5),
     DepartmentID 	TINYINT UNSIGNED,
     PositionID 		TINYINT UNSIGNED,
-    CreateDate 		DATETIME,
+    CreateDate 		DATE,
     
     -- THÊM KHÓA PHỤ PHÒNG BAN VÀ CHỨC VỤ --
     FOREIGN KEY (DepartmentID) 	REFERENCES Department(DepartmentID),
@@ -34,7 +34,7 @@ create table Group1 (
 	GroupID		TINYINT UNSIGNED 	PRIMARY KEY,
     GroupName	VARCHAR(30) 		UNIQUE KEY ,
     CreatorID	TINYINT UNSIGNED 	UNIQUE KEY,
-    CreateDate	date
+    CreateDate	DATE
 
 );
 
@@ -42,7 +42,7 @@ create table Group1 (
 create table GroupAccount(
 	GroupID 	TINYINT UNSIGNED,
     AccountID 	TINYINT UNSIGNED,
-    JoinDate 	date ,
+    JoinDate 	DATE ,
     -- TẠO KHÓA PHỤ NHÓM VÀ Account
     FOREIGN KEY (GroupID) REFERENCES Group1(GroupID),
     FOREIGN KEY (AccountID) REFERENCES Account1(AccountID)
@@ -50,8 +50,8 @@ create table GroupAccount(
 
 -- tạo bảng loại câu hỏi
 create table TypeQuestion(
-	TypeID TINYINT UNSIGNED 	PRIMARY KEY,
-    TypeName VARCHAR(30) 		UNIQUE KEY 
+	TypeID 		TINYINT UNSIGNED 	PRIMARY KEY,
+    TypeName 	VARCHAR(30) 		UNIQUE KEY 
     
 );
 -- tạo bảng chủ đề câu hỏi
@@ -77,10 +77,10 @@ create table Question(
 
 -- tạo bảng câu trả lời
 create table Answer(
-	AnswerID TINYINT UNSIGNED 	PRIMARY KEY,
-    Content VARCHAR(30) 		UNIQUE KEY,
-   QuestionID TINYINT UNSIGNED 	,
-   isCorrect ENUM('YES','NO'),
+	AnswerID 	TINYINT UNSIGNED 	PRIMARY KEY,
+    Content 	VARCHAR(30) 		,
+   QuestionID 	TINYINT UNSIGNED 	,
+   isCorrect 	ENUM('YES','NO'),
    
   -- TẠO KHÓA PHỤ QuestionID
   FOREIGN KEY (QuestionID) REFERENCES Question(QuestionID)
@@ -88,13 +88,13 @@ create table Answer(
 
 -- tạo bảng đề thi
 create table Exam(
-	ExamID 		TINYINT UNSIGNED 	PRIMARY KEY,
-    code1 		VARCHAR(30)			UNIQUE KEY NOT NULL,
-   Title 		VARCHAR(30)			UNIQUE KEY NOT NULL,
-  CategoryID  TINYINT UNSIGNED,
-  Duration 		DATETIME,
-  CreatorID		TINYINT UNSIGNED,
-  CreateDate 	date				NOT NULL,
+	ExamID 			TINYINT UNSIGNED 	PRIMARY KEY,
+    code1 			VARCHAR(30)			UNIQUE KEY NOT NULL,
+	Title 			VARCHAR(30)			  NOT NULL,
+	CategoryID  	TINYINT UNSIGNED,
+	Duration 		VARCHAR(5),
+	CreatorID		TINYINT UNSIGNED,
+	CreateDate 		DATE	NOT NULL,
   -- TẠO KHÓA PHỤ CategoryID
 	FOREIGN KEY (CategoryID) REFERENCES CategoryQuestion(CategoryID)
 
@@ -103,10 +103,10 @@ create table Exam(
 -- tạo bảng câu hỏi thi
 create table ExamQuestion(
 	ExamID 		TINYINT UNSIGNED,
-   QuestionID TINYINT UNSIGNED,
+   QuestionID 	TINYINT UNSIGNED,
    
    -- TẠO KHÓA PHỤ CategoryID
-   FOREIGN KEY (ExamID) REFERENCES Exam(ExamID),
+	FOREIGN KEY (ExamID) REFERENCES Exam(ExamID),
     FOREIGN KEY (QuestionID) REFERENCES Question(QuestionID)
 );
 

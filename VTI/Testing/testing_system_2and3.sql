@@ -1,6 +1,6 @@
 -- insert data
 
-USE testing_system_2;
+USE testing_system_1;
 -- INSERT BẢNG PHÒNG BAN
 INSERT INTO Department(DepartmentID, DepartmentName)
 VALUES
@@ -19,16 +19,16 @@ VALUES
 -- INSERT INTO TABLE CHỨC VỤ
 INSERT INTO Position1(PositionID,PositionName)
 VALUES
-(1,		N'Trưởng phòng'),
-(2,		N'Thư kí'),
-(3,		N'Nhân viên'),
-(4,		N'Tổng giám đốc'),
+(1,		N'developer'),
+(2,		N'test'),
+(3,		N'scrum master'),
+(4,		N'PM'),
 (5,		N'Giám đốc điều hành'),
 (6,		N'Giám đốc tài chính'),
 (7,		N'Giám đốc marketing'),
 (8,		N'Giám đốc công nghệ'),
 (9,		N'Giám đốc sản suất'),
-(10,	N'Phó Giám đốc');
+(10,	N'Tổng giám đốc');
 
 -- INSERT INTO TABLE USER
 INSERT INTO Account1(AccountID,Email,Username,FullName,DepartmentID,PositionID,CreateDate)
@@ -39,10 +39,10 @@ VALUES
 (4,		N'@@hieuvm_vti.edu.vn',	'hieuvm',		N'Vũ Minh Hiếu',			 1,1, '2021-10-01'),
 (5,		N'@@sangpt_vti.edu.vn',	'sangpt',		N'Phạm Trọng Sang',        	 6,8, '2018-10-05'),
 (6,		N'@@hoangvh_vti.edu.vn','hoangvh',		N'Vũ Huy Hoàng',	    	 9,10, '2021-10-05'),
-(7,		N'@@tiennm_vti.edu.vn',	'tiennm',		N'Nguyễn Minh Tiến',		 5,7, '2019-01-01'),
-(8,		N'@@hoamp_vti.edu.vn',	'hoamp',		N'Phan Minh Hòa',			 5,5, '2019-10-05'),
-(9,		N'@@hieubm_vti.edu.vn',	'hieubm',		N'Bùi Minh Hiếu',			 9,9, '2021-02-05'),
-(10,	N'@@hoanglm_vti.edu.vn','hoanglm',		N'Lò Minh Hoàng',			 1,9, '2020-10-05');
+(7,		N'@@tiennm_vti.edu.vn',	'tiennm',		N'Nguyễn Minh Tiến',		 5,1, '2019-01-01'),
+(8,		N'@@hoamp_vti.edu.vn',	'hoamp',		N'Phan Minh Hòa',			 5,2, '2019-10-05'),
+(9,		N'@@hieubm_vti.edu.vn',	'hieubm',		N'Bùi Minh Hiếu',			 9,3, '2021-02-05'),
+(10,	N'@@hoanglm_vti.edu.vn','hoanglm',		N'Lò Minh Hoàng',			 1,1, '2020-10-05');
 
 -- INSERT INTO TABLE nhóm
 INSERT INTO Group1(GroupID,GroupName,CreatorID,CreateDate)
@@ -60,18 +60,18 @@ VALUES
 
 
 -- INSERT INTO TABLE GroupAccount
-INSERT INTO GroupAccount(GroupAccountID,GroupID,AccountID,JoinDate)
+INSERT INTO GroupAccount(GroupID,AccountID,JoinDate)
 VALUES
-(1,		2,	7,	'2021-11-01'),
-(2,		9,	3,	'2021-12-01'),
-(3,		2,	5,	'2020-12-11'),
-(4,		3,	1,	'2019-01-15'),
-(5,		4,	2,	'2018-12-14'),
-(6,		6,	8,	'2021-05-21'),
-(7,		1,	1,	'2018-03-13'),
-(8,		2,	9,	'2019-02-13'),
-(9,		3,	6,	'2020-01-12'),
-(10,	3,	9,	'2021-11-11');
+(		2,	7,	'2021-11-01'),
+(		9,	NULL,	'2021-12-01'),
+(		2,	5,	'2020-12-11'),
+(		3,	1,	'2019-01-15'),
+(		4,	1,	'2018-12-14'),
+(		6,	7,	'2021-05-21'),
+(		1,	3,	'2018-03-13'),
+(		2,	9,	'2019-02-13'),
+(		3,	6,	'2020-01-12'),
+(		3,	9,	'2021-11-11');
 
 -- INSERT INTO TABLE loại câu hỏi
 INSERT INTO TypeQuestion(TypeID,TypeName)
@@ -127,16 +127,16 @@ VALUES
 INSERT INTO Answer(AnswerID,Content,QuestionID,isCorrect)
 VALUES
 
-(1,			N'A',			1,	'YES'),
-(2,			N'B',			2,	'NO'),
-(3,			N'A',			5,	'YES'),
-(4,			N'C',			6,	'NO'),
-(5,			N'D',			1,	'NO'),
-(6,			N'B',			2,	'YES'),
-(7,			N'D',			9,	'YES'),
-(8,			N'A',			8,	'YES'),
-(9,			N'C',			7,	'NO'),
-(10,		N'B',			3,	'YES');
+(1,			'A',			1,	'YES'),
+(2,			'B',			2,	'NO'),
+(3,			'A',			5,	'YES'),
+(4,			'C',			6,	'NO'),
+(5,			'D',			1,	'NO'),
+(6,			'B',			2,	'YES'),
+(7,			'D',			9,	'YES'),
+(8,			'A',			8,	'YES'),
+(9,			'C',			7,	'NO'),
+(10,		'B',			3,	'YES');
 
 
 -- INSERT INTO TABLE đề thi
@@ -154,52 +154,85 @@ VALUES
 (9,			N'9',			N'Đề thi THPT Quốc Gia',		2,	90,	7,	'2020-12-12'),
 (10,		N'10',			N'Đề thi THPT Quốc Gia',		4,	120,	2,	'2021-12-11');
 
+-- INSERT INTO TABLE ExamQuestion
+INSERT INTO ExamQuestion	(ExamID,QuestionID)
+VALUES						(1		,2),
+							(2		,1),
+							(3		,3),
+							(4		,8),
+							(1		,7),
+							(7		,2),
+							(8		,3),
+							(4		,5),
+							(2		,5),
+							(10		,1);
 
 -------------------------------------------- SELECT----------------------------------------------
--- LẤY RA TẤT CẢ CÁC PHÒNG BAN
+--  2 LẤY RA TẤT CẢ CÁC PHÒNG BAN
+USE testing_system_1;
 SELECT * FROM Department;
 
--- LẤY RA ID CỦA PHÒNG BAN SALE
+-- 3 LẤY RA ID CỦA PHÒNG BAN SALE
 SELECT DepartmentID FROM Department
 WHERE DepartmentName LIKE 'SALE';
 
--- Lấy ra thông tin account có full name dài nhất
+-- 4 Lấy ra thông tin account có full name dài nhất
 SELECT * FROM Account1
-WHERE LENGTH(FullName) = (SELECT MAX(LENGTH(FullName)) FROM Account1);
+WHERE char_length(FullName) = (SELECT MAX(char_length(FullName)) FROM Account1);
 
--- Lấy ra thông tin account có fullname dài nhất và thuộc phòng ban có id  = 3
+-- 5 Lấy ra thông tin account có fullname dài nhất và thuộc phòng ban có id  = 3
 SELECT * FROM Account1
-WHERE LENGTH(FullName) = (SELECT MAX(LENGTH(FullName)) FROM Account1) AND DepartmentID = 4;
+WHERE char_length(FullName) = (SELECT MAX(char_length(FullName)) FROM Account1) AND DepartmentID = 2;
 
--- Lấy ra tên group đã tham gia trước ngày 20/12/2019
+-- 6 Lấy ra tên group đã tham gia trước ngày 20/12/2019
 SELECT GroupName FROM Group1
 WHERE CreateDate < '2019-12-20';
 
--- Lấy ra ID của question có >= 4 câu trả lời
-SELECT QuestionID,COUNT(QuestionID) FROM Answer
+-- 7 Lấy ra ID của question có >= 4 câu trả lời
+SELECT QuestionID,COUNT(QuestionID) as 'Câu trả lời' FROM Answer
 GROUP BY QuestionID
-HAVING COUNT(QuestionID) >=4;
+HAVING COUNT(QuestionID) >=2;
 
---  Lấy ra các mã đề thi có thời gian thi >= 60 phút và được tạo trước ngày  20/12/2019
+--  8 Lấy ra các mã đề thi có thời gian thi >= 60 phút và được tạo trước ngày  20/12/2019
 SELECT * FROM Exam
 WHERE Duration >= 60 AND CreateDate < '2019-12-20';
 
- -- Lấy ra 5 group được tạo gần đây nhất
+ -- 9 Lấy ra 5 group được tạo gần đây nhất
  
  SELECT  * FROM Group1
  ORDER BY CreateDate DESC LIMIT 5;
 
--- : Đếm số nhân viên thuộc department có id = 2
+-- 10: Đếm số nhân viên thuộc department có id = 2
 SELECT COUNT(DepartmentID) AS 'SỐ NHÂN VIÊN' FROM Account1
-where DepartmentID = 2;
+where DepartmentID = 2
+GROUP BY (DepartmentID);
 
--- Lấy ra nhân viên có tên bắt đầu bằng chữ "D" và kết thúc bằng chữ "o"
+-- 11 Lấy ra nhân viên có tên bắt đầu bằng chữ "D" và kết thúc bằng chữ "o"
 SELECT * FROM Account1
 WHERE FullName like 'V%g';
 
--- Xóa tất cả các exam được tạo trước ngày 20/12/2019
+-- 12 Xóa tất cả các exam được tạo trước ngày 20/12/2019
 DELETE FROM Exam
 WHERE Exam.CreateDate < '2019-12-20';
+
+-- 13 Xóa tất cả các question có nội dung bắt đầu bằng từ "câu hỏi"
+SELECT * from question;
+DELETE FROM question
+WHERE content like 'Câu hỏi%';
+
+-- 14 Update thông tin của account có id = 5 thành tên "Nguyễn Bá Lộc" và email thành loc.nguyenba@vti.com.vn
+SELECT * FROM Account1;
+
+UPDATE Account1
+SET FullName = N'Nguyễn Bá Lộc' , Email = 'loc.nguyenba@vti.com.vn'
+WHERE AccountID = 5;
+
+-- 15: update account có id = 5 sẽ thuộc group có id = 4
+UPDATE Account1
+SET DepartmentID = 4
+WHERE AccountID = 5;
+
+
 
 
 
