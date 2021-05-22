@@ -1,7 +1,7 @@
 USE testing_system_1;
 -- 1 Viết lệnh để lấy ra danh sách nhân viên và thông tin phòng ban của họ
 SELECT * FROM Account1 A
-INNER JOIN Department B ON A.DepartmentID = B.DepartmentID;
+LEFT JOIN Department B ON A.DepartmentID = B.DepartmentID;
 
 SELECT * FROM testing_system_1.account1;
 SELECT *  FROM department;
@@ -14,12 +14,12 @@ WHERE CreateDate > '2010-12-20';
 SELECT * FROM position1;
 
 SELECT * FROM Account1 A
-INNER JOIN position1 B ON A.PositionID = B.PositionID
+LEFT JOIN position1 B ON A.PositionID = B.PositionID
 where PositionName like 'developer';
 
 
 -- 4 Viết lệnh để lấy ra danh sách các phòng ban có >3 nhân viên
-SELECT B.DepartmentName,COUNT(B.DepartmentID) AS 'Nhân Viên' FROM Account1 A
+SELECT B.DepartmentName,COUNT(B.DepartmentID) AS 'Nhân Viên',GROUP_CONCAT(A.FullName) FROM Account1 A
 INNER JOIN department B ON B.DepartmentID = A.DepartmentID
 GROUP BY A.DepartmentID
 HAVING COUNT(B.DepartmentID) >=3;
@@ -28,51 +28,58 @@ HAVING COUNT(B.DepartmentID) >=3;
 SELECT * FROM testing_system_1.examquestion;
 SELECT * FROM question;
 
-SELECT B.content ,COUNT(A.questionID) FROM examquestion A
-inner join question B ON B.questionID = A.questionID
+SELECT B.content ,COUNT(A.questionID) AS 'Số câu' FROM examquestion A
+INNER join question B ON B.questionID = A.questionID
 group by A.questionID
-ORDER BY COUNT(A.questionID) DESC
-LIMIT 1;
+
+HAVING COUNT(A.questionID) = (SELECT COUNT(questionID) FROM examquestion GROUP BY (questionID) LIMIT 1 );
+SELECT * FROM examquestion;
 
 -- 6 Thông kê mỗi category Question được sử dụng trong bao nhiêu Question
 SELECT B.CategoryName, count(A.CategoryID) AS 'Số câu hỏi' FROM question A
 inner join categoryquestion B ON B.CategoryID = A.CategoryID
 group by A.CategoryID;
 
-SELECT * FROM testing_system_1.categoryquestion;
+
 -- 7 Thông kê mỗi Question được sử dụng trong bao nhiêu Exam
 SELECT * FROM question;
 SELECT  * FROM examquestion;
 
-SELECT  A.ExamID,COUNT(A.QuestionID) AS 'Số câu hỏi' from examquestion A
-inner join question B ON B.QuestionID = A.QuestionID
-GROUP BY A.ExamID;
+SELECT  A.QuestionID,A.content,COUNT(B.ExamID) AS 'Số câu trả lời' from question A
+RIGHT join examquestion B ON B.QuestionID = A.QuestionID
+GROUP BY A.QuestionID;
 
 -- 8 Lấy ra Question có nhiều câu trả lời nhất
-SELECT A.AnswerID,COUNT(B.QuestionID) AS 'Số câu hỏi' FROM answer A
-inner join question B ON B.QuestionID = A.QuestionID
+SELECT B.QuestionID,COUNT(A.AnswerID) AS 'Số câu tl' FROM answer A
+LEFT join question B ON B.QuestionID = A.QuestionID
 GROUP BY B.QuestionID
-limit 3;
+HAVING 	COUNT(A.AnswerID) = (SELECT COUNT(AnswerID) FROM answer GROUP BY QuestionID ORDER BY COUNT(AnswerID) DESC LIMIT 1);
 
 select * from answer;
 
 -- 9 Thống kê số lượng account trong mỗi group
 SELECT A.GroupID,COUNT(A.AccountID) AS 'Số lượng người' FROM groupaccount A
-inner join account1 B ON B.AccountID = A.AccountID
+LEFT join account1 B ON B.AccountID = A.AccountID
 GROUP BY A.GroupID 
 order by A.GroupID asc;
 
 -- 10 Tìm chức vụ có ít người nhất
-select * from position1;
 select B.PositionName,COUNT(A.PositionID) as 'Số người' from account1 A
-INNER JOIN position1 B ON B.PositionID = A.PositionID
+LEFT JOIN position1 B ON B.PositionID = A.PositionID
 group by A.PositionID
-order by COUNT(A.PositionID) asc;
+HAVING COUNT(A.PositionID) = (SELECT COUNT(PositionID) FROM account1 GROUP BY PositionID ORDER BY COUNT(PositionID) ASC LIMIT 1);
+
+select * from position1;
+SELECT * FROM account1;
 
 -- 11 Thống kê mỗi phòng ban có bao nhiêu dev, test, scrum master, PM
-SELECT B.DepartmentName as 'Phòng ban',C.PositionName,COUNT(A.PositionID) as'Số nhân viên' FROM account1 A
-INNER JOIN department B ON B.DepartmentID = A.DepartmentID
-INNER JOIN position1 C ON C.PositionID = A.PositionID
+SELECT 
+	B.DepartmentName as 'Phòng ban',
+	C.PositionName,
+	COUNT(A.PositionID) as'Số nhân viên' 
+FROM account1 A
+LEFT JOIN department B ON B.DepartmentID = A.DepartmentID
+LEFT JOIN position1 C ON C.PositionID = A.PositionID
 group by B.DepartmentName;
 
 

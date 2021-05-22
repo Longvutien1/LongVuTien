@@ -42,7 +42,8 @@ VALUES
 (7,		N'@@tiennm_vti.edu.vn',	'tiennm',		N'Nguyễn Minh Tiến',		 5,1, '2019-01-01'),
 (8,		N'@@hoamp_vti.edu.vn',	'hoamp',		N'Phan Minh Hòa',			 5,2, '2019-10-05'),
 (9,		N'@@hieubm_vti.edu.vn',	'hieubm',		N'Bùi Minh Hiếu',			 9,3, '2021-02-05'),
-(10,	N'@@hoanglm_vti.edu.vn','hoanglm',		N'Lò Minh Hoàng',			 1,1, '2020-10-05');
+(10,	N'@@hoanglm_vti.edu.vn','hoanglm',		N'Lò Minh Hoàng',			 1,1, '2020-10-05'),
+(11,	N'@@admin_vti.edu.vn','admin',			N'admin',				 	 1,1, '2020-10-05');
 
 -- INSERT INTO TABLE nhóm
 INSERT INTO Group1(GroupID,GroupName,CreatorID,CreateDate)
@@ -77,16 +78,9 @@ VALUES
 INSERT INTO TypeQuestion(TypeID,TypeName)
 VALUES
 
-(1,			'Type1'),
-(2,			'Type2'),
-(3,			'Type3'),
-(4,			'Type4'),
-(5,			'Type5'),
-(6,			'Type6'),
-(7,			'Type7'),
-(8,			'Type8'),
-(9,			'Type9'),
-(10,		'Type10');
+(1,			'Essay'),
+(2,			'Multiple-Choice');
+
 
 
 
@@ -108,51 +102,51 @@ VALUES
 
 
 -- INSERT INTO TABLE câu hỏi
-INSERT INTO Question(QuestionID,Content,CategoryID,TypeID,CreatorID,CreateDate)
+INSERT INTO Question(QuestionID,	Content,				CategoryID,	TypeID,CreatorID,CreateDate)
 VALUES
 
-(1,			N'Dễ',				1,	2,	1,	'2021-01-21'),
-(2,			N'Khó',				2,	3,	2,	'2020-01-21'),
-(3,			N'Rất khó',			3,	7,	1,	'2019-01-21'),
-(4,			N'Đơn giản',		4,	8,	3,	'2018-01-21'),
-(5,			N'Cơ bản',			1,	9,	5,	'2021-02-21'),
-(6,			N'Cơ bản 2',		2,	5,	6,	'2021-01-22'),
-(7,			N'Cơ bản 3',		8,	2,	8,	'2021-11-21'),
-(8,			N'Cơ bản 4',		9,	4,	9,	'2018-12-21'),
-(9,			N'Cơ bản 5',		10,	3,	10,	'2019-09-21'),
-(10,		N'Cơ bản 6',		5,	1,	7,	'2020-10-21');
+					(1,			N'Câu hỏi về Java',				1,		1,		1,		'2021-01-21'),
+					(2,			N'Câu hỏi về C#',				2,		1,		2,		'2020-01-21'),
+					(3,			N'Câu hỏi về PHP',				3,		2,		3,		'2019-01-21'),
+					(4,			N'Hỏi về SQL',					4,		2,		4,		'2018-01-21'),
+					(5,			N'Hỏi về MySQL',				1,		2,		5,		'2021-02-21'),
+					(6,			N'Hỏi về Js',					2,		1,		6,		'2021-01-22'),
+					(7,			N'Hỏi về PYthon',				8,		2,		7,		'2021-11-21'),
+					(8,			N'Hỏi về PostMan',				9,		1,		8,		'2018-12-21'),
+					(9,			N'Hỏi về APS.MAN',				10,		2,		9,		'2019-09-21'),
+					(10,		N'Hỏi về Ruby',					5,		1,		10,		'2020-10-21');
 
 
 -- INSERT INTO TABLE câu trả lời
 INSERT INTO Answer(AnswerID,Content,QuestionID,isCorrect)
 VALUES
 
-(1,			'A',			1,	'YES'),
-(2,			'B',			2,	'NO'),
-(3,			'A',			5,	'YES'),
-(4,			'C',			6,	'NO'),
-(5,			'D',			1,	'NO'),
-(6,			'B',			2,	'YES'),
-(7,			'D',			9,	'YES'),
-(8,			'A',			8,	'YES'),
-(9,			'C',			7,	'NO'),
-(10,		'B',			3,	'YES');
+(1,			'A',			1,	'TRUE'),
+(2,			'B',			2,	'FALSE'),
+(3,			'A',			5,	'TRUE'),
+(4,			'C',			6,	'TRUE'),
+(5,			'D',			1,	'TRUE'),
+(6,			'B',			2,	'FALSE'),
+(7,			'D',			9,	'FALSE'),
+(8,			'A',			8,	'TRUE'),
+(9,			'C',			7,	'FALSE'),
+(10,		'B',			3,	'FALSE');
 
 
 -- INSERT INTO TABLE đề thi
-INSERT INTO Exam(ExamID,code1,Title,CategoryID,Duration,CreatorID,CreateDate)
+INSERT INTO Exam(ExamID,	code1,			Title,						CategoryID,	Duration,CreatorID,CreateDate)
 VALUES
 
-(1,			N'1',			N'Đề thi THPT Quốc Gia',		1,	70,	1,	'2021-01-01'),
-(2,			N'2',			N'Đề thi THPT Quốc Gia',		2,	0,	1,	'2020-02-01'),
-(3,			N'3',			N'Đề thi THPT Quốc Gia',		3,	90,	3,	'2021-09-12'),
-(4,			N'4',			N'Đề thi THPT Quốc Gia',		4,	60,	5,	'2018-06-12'),
-(5,			N'5',			N'Đề thi THPT Quốc Gia',		5,	40,	2,	'2018-06-08'),
-(6,			N'6',			N'Đề thi THPT Quốc Gia',		2,	'45',	9,	'2019-05-09'),
-(7,			N'7',			N'Đề thi THPT Quốc Gia',		9,	45,	8,	'2019-1-06'),
-(8,			N'8',			N'Đề thi THPT Quốc Gia',		7,	45,	7,	'2020-11-05'),
-(9,			N'9',			N'Đề thi THPT Quốc Gia',		2,	90,	7,	'2020-12-12'),
-(10,		N'10',			N'Đề thi THPT Quốc Gia',		4,	120,	2,	'2021-12-11');
+				(1,			N'1',			N'Đề thi THPT Quốc Gia',		1,		70,			1,	'2021-01-01'),
+				(2,			N'2',			N'Đề thi THPT Quốc Gia',		2,		0,			2,	'2020-02-01'),
+				(3,			N'3',			N'Đề thi THPT Quốc Gia',		3,		90,			3,	'2021-09-12'),
+				(4,			N'4',			N'Đề thi THPT Quốc Gia',		4,		60,			4,	'2018-06-12'),
+				(5,			N'5',			N'Đề thi THPT Quốc Gia',		5,		40,			5,	'2018-06-08'),
+				(6,			N'6',			N'Đề thi THPT Quốc Gia',		2,		45,			6,	'2019-05-09'),
+				(7,			N'7',			N'Đề thi THPT Quốc Gia',		9,		45,			7,	'2019-1-06'),
+				(8,			N'8',			N'Đề thi THPT Quốc Gia',		7,		45,			8,	'2020-11-05'),
+				(9,			N'9',			N'Đề thi THPT Quốc Gia',		2,		90,			9,	'2020-12-12'),
+				(10,		N'10',			N'Đề thi THPT Quốc Gia',		4,		120,		10,	'2021-12-11');
 
 -- INSERT INTO TABLE ExamQuestion
 INSERT INTO ExamQuestion	(ExamID,QuestionID)

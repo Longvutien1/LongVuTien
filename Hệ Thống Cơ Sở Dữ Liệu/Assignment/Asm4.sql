@@ -3,17 +3,17 @@ DROP DATABASE IF EXISTS Asm4;
 CREATE DATABASE Asm4;
 USE Asm4;
 -- table phòng ban
-CREATE TABLE Department(
-	Department_Number	INT PRIMARY KEY AUTO_INCREMENT,
-    Department_Name		NVARCHAR(100)
-);
+CREATE TABLE Department (
+    Department_Number INT PRIMARY KEY AUTO_INCREMENT,
+    Department_Name NVARCHAR(100)
+)
 
 -- table nhân viên
-CREATE TABLE Employee_Table(
-	Employee_Number		INT PRIMARY KEY AUTO_INCREMENT,
-    Employee_Name		NVARCHAR(100),
-    Department_Number	INT
-);
+CREATE TABLE Employee_Table (
+    Employee_Number INT PRIMARY KEY AUTO_INCREMENT,
+    Employee_Name NVARCHAR(100),
+    Department_Number INT
+)
 
 -- table kĩ năng nhân viên
 CREATE TABLE Employee_Skill_Table(
@@ -61,25 +61,43 @@ VALUES			(1,		'Java',				NOW()),
                 
 --- select
 -- 3: Viết lệnh để lấy ra danh sách nhân viên (name) có skill Java      Hướng dẫn: sử dụng UNION
-SELECT Employee_Name,Skill_Code FROM Employee_Table A
-INNER JOIN Employee_Skill_Table B ON B.Employee_Number =  A.Employee_Number
-WHERE	Skill_Code LIKE 'Java';
+USE Asm4;
+SELECT 
+    Employee_Name, Skill_Code
+FROM
+    Employee_Table A
+LEFT JOIN
+    Employee_Skill_Table B ON B.Employee_Number = A.Employee_Number
+WHERE
+    Skill_Code LIKE 'Java';
 
 -- 4 Viết lệnh để lấy ra danh sách các phòng ban có >3 nhân viên
-SELECT A.*,COUNT(B.Department_Number) as 'Số nhân viên' FROM Department A
-INNER JOIN  	Employee_Table B ON B.Department_Number = A.Department_Number
-GROUP BY 	    Department_Number
-HAVING			COUNT(B.Department_Number) >=2;
+SELECT 
+    A.*, COUNT(B.Department_Number) AS 'Số nhân viên'
+FROM
+    Department A
+INNER JOIN
+    Employee_Table B ON B.Department_Number = A.Department_Number
+GROUP BY Department_Number
+HAVING COUNT(B.Department_Number) >= 2;
 
 -- 5: Viết lệnh để lấy ra danh sách nhân viên của mỗi văn phòng ban.   Hướng dẫn: sử dụng GROUP BY
-SELECT A.*,Department_Name FROM Employee_Table A
-RIGHT JOIN		Department B ON B.Department_Number = A.Department_Number;
+SELECT 
+    A.*, Department_Name
+FROM
+    Employee_Table A
+        RIGHT JOIN
+    Department B ON B.Department_Number = A.Department_Number;
 
 -- 6 Viết lệnh để lấy ra danh sách nhân viên có > 1 skills.  Hướng dẫn: sử dụng DISTINCT
-SELECT  DISTINCT A.*,COUNT(B.Employee_Number) AS 'Số skills'  FROM Employee_Table A
-INNER JOIN Employee_Skill_Table B ON B.Employee_Number = A.Employee_Number
+SELECT DISTINCT
+    A.*, COUNT(B.Employee_Number) AS 'Số skills'
+FROM
+    Employee_Table A
+        INNER JOIN
+    Employee_Skill_Table B ON B.Employee_Number = A.Employee_Number
 GROUP BY Employee_Number
-HAVING COUNT(B.Employee_Number) >1
+HAVING COUNT(B.Employee_Number) > 1
 
 
 
